@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>server-mock使用说明</title>
+<style>
+  .container{
+    width: 900px;
+    margin: 0 auto;
+  }
+  ul,li,p,a {
+    margin: 0;
+    padding: 0;
+  }
+  a {
+      text-decoration: none;
+      color: #000;
+  }
+  li {
+      list-style: none;
+      border: 1px solid #CCC;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-align: left;
+      cursor: pointer;
+  }
+
+  li:hover {
+    background-color: #228C4C;
+  }
+  #loadmore {
+      display: inline-block;
+      border: 1px solid #E27272;
+      border-radius: 3px;
+      padding: 10px;
+      color: #E27272;
+  }
+  .main {
+      text-align: center;
+  }
+  .bcgcolor {
+      background: #008000;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+  <div class="main">
+        <ul id="ct">
+        </ul>
+        <a href="#" id="loadmore">加载更多</a>
+    </div>
+
+
+    <script>
+      var btn=document.querySelector('#loadmore'),
+          ct=document.querySelector('#ct')
+          var pageIndex=0;
+          var lock=true
+
+      btn.addEventListener('click',function(e){
+        e.preventDefault();
+        //请求  请求发送
+        //加一个状态锁，当这个数据没到来的时候，
+        if (!lock) {
+          return;  //跳出执行
+        }
+
+        loadData(renderPage)
+
+      })
+        /*   
+        var xhr=new XMLHttpRequest()
+        xhr.onreadystatechange=function(){
+          if (xhr.readyState===4&& (xhr.status===200 || xhr.status==304)) {
+            var results=JSON.parse(xhr.responseText)
+            console.log(results);
+            //要到了数据，然后dosomething,下面就是dosomething,也就是拼接字符串，并且放到html,页面里
+            var fragment=document.createDocumentFragment()
+            for(i=0;i<results.length;i++){
+              var node=document.createElement('li')
+              node.innerText=results[i]
+              fragment.appendChild(node);
+            }
+            ct.appendChild(fragment)
+            pageIndex=pageIndex+5
+            lock=true; //当数据来临完毕的时候，再设为true，下次用户点击时正常。
+
+          }
+        }
+        xhr.open('get','/loadmore?index='+pageIndex+'&length=5',true)
+        xhr.send()
+        lock=false //在等待数据的过程中，状态是false,return跳出执行，那么这样用户一直点击，那么一直就return 跳出执行，不会加载
+        
+      */
+     
+     function loadData(callback){
+        ajax({
+          type:'get',
+          url:'/loadmore',
+          data:{
+            index:pageIndex,
+            length:5
+          },
+          onSuccess:callback,
+          onError:function(){
+            alert('出错了')
+          }
+        })
+     }
+
+
+     function renderPage(news){
+          var fragment=document.createDocumentFragment()
+          for(i=0;i<news.length;i++){
+            var node=document.createElement('li')
+            node.innerText=news[i]
+            fragment.appendChild(node);
+        }
+          ct.appendChild(fragment)
+     }
+
+
+     function ajax(options){
+          var xhr=new XMLHttpRequest()
+          xhr.onreadystatechange=function(){
+          if (xhr.readyState===4&& (xhr.status===200 || xhr.status==304)) {
+            var results=JSON.parse(xhr.responseText)
+          //要到了数据，然后dosomething,下面就是dosomething,也就是拼接字符串，并且放到html,页面里
+            options.onSuccess(results)
+            pageIndex=pageIndex+5
+            lock=true; //当数据来临完毕的时候，再设为true，下次用户点击时正常。
+
+          }
+        } 
+          var query='?'
+          for(key in options.data){
+            query+=key+'='+options.data[key]+'&'
+          }
+          query=query.substr(0,query.length-1)
+          xhr.open(options.type,options.url+query,true)
+          xhr.send()
+     }
+
+  	</script>
+</body>
+</html>
