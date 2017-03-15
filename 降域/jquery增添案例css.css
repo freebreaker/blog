@@ -1,0 +1,152 @@
+
+/*公共样式*/
+* {
+  box-sizing: border-box;
+}
+body, ul, li, p{
+  margin: 0;
+  padding: 0;
+}
+ol,ul{
+  list-style: none;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+
+.tabs{
+	margin: 10px;
+	position: relative;
+}
+
+.tabs{
+  float: left;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+
+.tabs li{
+	float: left;
+	padding: 10px 0;
+}
+
+.tabs li a{
+  padding: 0 20px;
+  border-right: 1px solid #ccc;
+  line-height: 1;
+}  
+
+.tabs li:last-child a{
+  border: none;
+}
+
+
+
+.clearfix:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.clearfix{
+  *zoom: 1;
+}
+
+
+
+
+
+
+.panel-art{
+	width: 692px;
+}
+
+
+.panel-li{
+  position: relative;
+  float: left;
+  width: 220px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  margin-bottom:20px;
+  text-align: center;
+  border: 1px solid #eee;
+  background: #fff;
+}
+
+.panel-li .cover{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0, 0.3);
+  	transition: all 0.3s;
+  	opacity: 0;
+}
+.panel-li .hover{
+	opacity: 1;
+}
+
+.panel-li .cover a{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border: 1px solid #c81623;
+  color: #c81623;
+  padding: 10px 15px;
+  border-radius: 3px;
+  text-align: center;
+  background: #fff;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+.tabs li.active{
+  background: #ccc;
+}
+.tabs li.active a{
+  color: #c81623;
+}
+
+.panel-first{
+	display: none;
+}
+
+.panel .active{
+	display: block;
+}
+
+
+
+
+
+.addsth:after{
+	content: '';
+	clear: both;
+	display: block;
+}
+
+
+.add button{
+	display: block;
+	padding: 10px;
+	border: 1px solid red;
+	margin: 20px;
+	background-color: white;
+	border-radius: 3px;
+}
+
+.add button a{
+	color: red;
+	font-size: 30px;
+}
